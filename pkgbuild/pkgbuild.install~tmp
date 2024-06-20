@@ -6,11 +6,14 @@
 ## arg 1:  the new package version
 post_install() {
     systemctl enable --now libvirtd.service
-    virsh net-start default
+    
+    network=$(LANG=C virsh net-list | grep default)
+    if [ -z "$network" ];then
+      virsh net-create /etc/libvirt/qemu/networks/default.xml
+    fi
+    if [ "$(
+    #virsh net-start default
     virsh net-autostart default
-    if [ ! -e "/etc/libvirt/qemu/networks/autostart/default.xml" ];then
-		ln /etc/libvirt/qemu/networks/default.xml /etc/libvirt/qemu/networks/autostart/default.xml
-	fi
 }
 
 ## arg 2:  the old package version
