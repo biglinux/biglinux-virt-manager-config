@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+for user in $(awk -F':' '{ if ($3 >= 1000 && $1 != "nobody") print $1 }' /etc/passwd); do
+    sudo -u $user XDG_RUNTIME_DIR=/run/user/$(id -u $user) usermod -a -G libvirt $user
+    sudo -u $user XDG_RUNTIME_DIR=/run/user/$(id -u $user) usermod -a -G libvirt-qemu $user
+done
