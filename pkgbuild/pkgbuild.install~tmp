@@ -9,8 +9,8 @@ post_install() {
     virsh net-start default
     virsh net-autostart default
     if [ ! -e "/etc/libvirt/qemu/networks/autostart/default.xml" ];then
-        ln /etc/libvirt/qemu/networks/default.xml /etc/libvirt/qemu/networks/autostart/default.xml
-    fi
+		ln /etc/libvirt/qemu/networks/default.xml /etc/libvirt/qemu/networks/autostart/default.xml
+	fi
 }
 
 ## arg 2:  the old package version

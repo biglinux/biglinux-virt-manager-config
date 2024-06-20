@@ -1,0 +1,10 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = qemu
+
+[Action]
+Description = Add user to virt-manager
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/biglinux-virt-manager-config
