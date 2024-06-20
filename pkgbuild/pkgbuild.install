@@ -7,11 +7,13 @@
 post_install() {
     systemctl enable --now libvirtd.service
     for user in $(awk -F':' '{ if ($3 >= 1000 && $1 != "nobody") print $1 }' /etc/passwd); do
-		sudo -u $user XDG_RUNTIME_DIR=/run/user/$(id -u $user) usermod -a -G libvirt $user
-		sudo -u $user XDG_RUNTIME_DIR=/run/user/$(id -u $user) usermod -a -G libvirt-qemu $user
+        sudo -u $user XDG_RUNTIME_DIR=/run/user/$(id -u $user) usermod -a -G libvirt $user
+        sudo -u $user XDG_RUNTIME_DIR=/run/user/$(id -u $user) usermod -a -G libvirt-qemu $user
     done
     
-    
+    virsh net-start default
+    virsh net-autostart default
+    ln /etc/libvirt/qemu/networks/default.xml /etc/libvirt/qemu/networks/autostart/default.xml
 }
 
 ## arg 2:  the old package version
