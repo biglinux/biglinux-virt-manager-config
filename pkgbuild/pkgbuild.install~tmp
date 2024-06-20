@@ -9,11 +9,15 @@ post_install() {
     
     network=$(LANG=C virsh net-list | grep default)
     if [ -z "$network" ];then
-      virsh net-create /etc/libvirt/qemu/networks/default.xml
+      virsh net-define /etc/libvirt/qemu/networks/default.xml
     fi
-    if [ "$(
-    #virsh net-start default
-    virsh net-autostart default
+    network=$(LANG=C virsh net-list | grep default)
+    if [ "$(awk '{print $2}' <<< $network)" != "active" ];then
+      virsh net-start default
+    fi
+    if [ "$(awk '{print $3}' <<< $network)" != "yes" ];then
+      virsh net-autostart default
+    fi
 }
 
 ## arg 2:  the old package version
