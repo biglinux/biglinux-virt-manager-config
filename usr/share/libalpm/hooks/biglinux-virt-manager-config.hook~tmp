@@ -3,8 +3,10 @@ Type = Package
 Operation = Install
 Operation = Upgrade
 Target = qemu
+Target = qemu-base
+Target = qemu-common
 
 [Action]
-Description = Auto configure virt-manager
+Description = Add user to virt-manager
 When = PostTransaction
 Exec = /usr/share/libalpm/scripts/biglinux-virt-manager-config

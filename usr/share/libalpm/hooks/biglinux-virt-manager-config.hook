@@ -2,7 +2,7 @@
 Type = Package
 Operation = Install
 Operation = Upgrade
-Target = qemu
+Target = libvirt
 
 [Action]
 Description = Add user to virt-manager
