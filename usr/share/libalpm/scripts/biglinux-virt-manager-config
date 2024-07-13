@@ -6,3 +6,6 @@ for user in $(awk -F':' '{ if ($3 >= 1000 && $1 != "nobody") print $1 }' /etc/pa
     sudo -u $user XDG_RUNTIME_DIR=/run/user/$(id -u $user) gsettings set org.virt-manager.virt-manager xmleditor-enabled true
     sudo -u $user XDG_RUNTIME_DIR=/run/user/$(id -u $user) gsettings set org.virt-manager.virt-manager system-tray true
 done
+
+systemctl start virtqemud.service
+systemctl start libvirtd.service

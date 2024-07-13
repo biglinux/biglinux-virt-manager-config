@@ -5,8 +5,8 @@
 
 ## arg 1:  the new package version
 post_install() {
-    systemctl start virtqemud.service
-    systemctl enable --now libvirtd.service
+    systemctl enable virtqemud.service #start in hooks
+    systemctl enable libvirtd.service #start in hooks
 
     network=$(LANG=C virsh net-list | grep default)
     if [ -z "$network" ];then
