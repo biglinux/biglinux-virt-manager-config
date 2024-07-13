@@ -9,3 +9,19 @@ done
 
 systemctl start virtqemud.service
 systemctl start libvirtd.service
+
+network=$(LANG=C virsh net-list | grep default)
+if [ -z "$network" ];then
+    virsh net-define /etc/libvirt/qemu/networks/default.xml
+fi
+network=$(LANG=C virsh net-list | grep default)
+if [ "$(awk '{print $2}' <<< $network)" != "active" ];then
+    virsh net-start default
+fi
+network=$(LANG=C virsh net-list | grep default)
+if [ "$(awk '{print $3}' <<< $network)" != "yes" ];then
+    virsh net-autostart default
+fi
+
+systemctl enable virtqemud.service
+systemctl enable libvirtd.service
