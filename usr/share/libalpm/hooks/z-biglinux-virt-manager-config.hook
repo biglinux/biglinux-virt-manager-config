@@ -3,6 +3,7 @@ Type = Package
 Operation = Install
 Operation = Upgrade
 Target = libvirt
+Target = biglinux-virt-manager-config
 
 [Action]
 Description = Configure virt-manager
