@@ -15,8 +15,8 @@ fi
 
 firewallBackend=$(awk '/^firewall_backend/ { gsub(/"/, "", $3); print $3 }' /etc/libvirt/network.conf)
 if [ "$firewallBackend" != "iptables" ];then
-    sed '/^firewall_backend/d' /etc/libvirt/network.conf
-    echo 'firewall_backend = "iptables"' | tee -a /etc/libvirt/network.conf
+    sed -i '/^firewall_backend/d' /etc/libvirt/network.conf
+    echo 'firewall_backend = "iptables"' | tee -a /etc/libvirt/network.conf > /dev/null
     systemctl restart libvirtd.service
 fi
 
