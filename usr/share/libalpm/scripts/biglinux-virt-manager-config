@@ -20,11 +20,8 @@ if [ "$firewallBackend" != "iptables" ];then
     systemctl restart libvirtd.service
 fi
 
-if [[ ! -f /etc/qemu/bridge.conf.bak ]]; then
-	if [[ -f /etc/qemu/bridge.conf ]]; then
-		cp /etc/qemu/bridge.conf /etc/qemu/bridge.conf.bak
-		echo "allow all" | tee -a /etc/qemu/bridge.conf.bak > /dev/null
-	fi        
+if [[ -f /etc/qemu/bridge.conf ]]; then
+    echo "allow all" | tee -a /etc/qemu/bridge.conf > /dev/null
 fi
 
 systemctl start virtqemud.service
