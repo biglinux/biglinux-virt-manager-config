@@ -14,9 +14,9 @@
 #}
 
 ## arg 2:  the old package version
-post_upgrade() {
-  /usr/share/libalpm/scripts/biglinux-virt-manager-config
-}
+# post_upgrade() {
+#   /usr/share/libalpm/scripts/biglinux-virt-manager-config
+# }
 
 ## arg 1:  the old package version
 #pre_remove() {

@@ -2,7 +2,7 @@
 
 pkgname=biglinux-virt-manager-config
 pkgdesc="Meta Package for install and configure virt-manager in biglinux"
-depends=('virt-manager' 'qemu-full' 'vde2' 'dnsmasq' 'bridge-utils' 'edk2-ovmf' 'swtpm')
+depends=('virt-manager' 'qemu-full' 'dnsmasq' 'bridge-utils' 'edk2-ovmf' 'swtpm' 'biglinux-improve-compatibility')
 # makedepends=('')
 # conflicts=('')
 pkgver=$(date +%y.%m.%d)
