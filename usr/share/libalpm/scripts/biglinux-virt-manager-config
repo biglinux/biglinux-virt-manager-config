@@ -13,14 +13,18 @@ if [ ! -e "/etc/libvirt/qemu/networks/default.xml.bkp" ];then
     fi
 fi
 
-firewallBackend=$(awk '/^firewall_backend/ { gsub(/"/, "", $3); print $3 }' /etc/libvirt/network.conf)
-if [ "$firewallBackend" != "iptables" ];then
-    sed -i '/^firewall_backend/d' /etc/libvirt/network.conf
-    echo 'firewall_backend = "iptables"' | tee -a /etc/libvirt/network.conf > /dev/null
-    systemctl restart libvirtd.service
+# firewallBackend=$(awk '/^firewall_backend/ { gsub(/"/, "", $3); print $3 }' /etc/libvirt/network.conf)
+# if [ "$firewallBackend" != "iptables" ];then
+#     sed -i '/^firewall_backend/d' /etc/libvirt/network.conf
+#     echo 'firewall_backend = "iptables"' | tee -a /etc/libvirt/network.conf > /dev/null
+#     systemctl restart libvirtd.service
+# fi
+
+if [ -e /etc/qemu/bridge.conf ] && [ -z "$(grep 'allow all' /etc/qemu/bridge.conf)" ]; then
+    echo "allow all" | tee -a /etc/qemu/bridge.conf > /dev/null
 fi
 
-systemctl start virtqemud.service
+# systemctl start virtqemud.service
 systemctl start libvirtd.service
 
 network=$(LANG=C virsh net-list | grep default)
@@ -36,5 +40,5 @@ if [ "$(awk '{print $3}' <<< $network)" != "yes" ];then
     virsh net-autostart default
 fi
 
-systemctl enable virtqemud.service
+# systemctl enable virtqemud.service
 systemctl enable libvirtd.service
